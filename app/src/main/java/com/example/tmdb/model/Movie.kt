@@ -1,6 +1,6 @@
 package com.example.tmdb.model
 
-data class Movie(
+class Movie(
     val adult: Boolean,
     val backdrop_path: String?,
     val genre_ids: List<Int>,
@@ -15,4 +15,18 @@ data class Movie(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+) {
+    // Every movie should have a unique movie ID
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Movie) return false
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
+}

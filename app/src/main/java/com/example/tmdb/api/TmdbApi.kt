@@ -8,6 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.QueryMap
 
 interface TmdbApi {
+
     @GET("3/search/movie")
     suspend fun searchMovie(@QueryMap params: Map<String, String>): Response<MovieSearchResult>
 
