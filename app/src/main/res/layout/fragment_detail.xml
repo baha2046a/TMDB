@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="movieDetail"
+                type="com.example.tmdb.model.MovieDetail"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".DetailFragment">
+
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:fillViewport="true"
+                >
+
+            <LinearLayout
+                    android:id="@+id/movie_detail_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:background="#0B1137">
+
+                <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_width="match_parent"
+                            android:layout_height="290dp"
+                            android:id="@+id/detail_backdrop"
+                            android:visibility="visible"
+                            android:scaleType="fitCenter"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginStart="0dp"
+                            android:alpha="0.8"/>
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                            android:layout_width="180dp"
+                            android:layout_height="270dp"
+                            android:id="@+id/detail_poster"
+                            android:visibility="visible"
+                            android:scaleType="fitCenter"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginStart="20dp"/>
+
+                </FrameLayout>
+
+                <TextView
+                        android:id="@+id/text_detail_title"
+                        style="?android:textAppearanceLarge"
+                        android:textStyle="bold"
+                        android:textColor="#fff"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movieDetail.title}"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        />
+
+                <TextView
+                        style="?android:textAppearanceSmall"
+                        android:id="@+id/text_detail_tagline"
+                        android:textColor="#BBFFF9"
+                        android:textStyle="bold"
+                        android:lineSpacingMultiplier="1.2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movieDetail.tagline}"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:paddingTop="2dp"
+                        />
+
+                <TextView
+                        style="?android:textAppearanceSmall"
+                        android:id="@+id/text_detail_release_date"
+                        android:textColor="#80ffffff"
+                        android:textStyle="bold"
+                        android:lineSpacingMultiplier="1.2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movieDetail.release_date}"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:paddingTop="2dp"
+                        />
+
+                <TextView
+                        style="?android:textAppearanceSmall"
+                        android:id="@+id/text_detail_original_language"
+                        android:textAllCaps="true"
+                        android:textColor="#FADCDA"
+                        android:textStyle="bold"
+                        android:lineSpacingMultiplier="1.2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movieDetail.original_language}"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:paddingTop="2dp"
+                        />
+
+                <TextView
+                        style="?android:textAppearanceSmall"
+                        android:id="@+id/text_detail_vote_average"
+                        android:textAllCaps="true"
+                        android:textColor="#FADCDA"
+                        android:textStyle="bold"
+                        android:lineSpacingMultiplier="1.2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movieDetail.voteAverageString}"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:paddingTop="2dp"
+                        />
+
+                <TextView
+                        style="?android:textAppearanceSmall"
+                        android:id="@+id/text_detail_overview"
+                        android:textAllCaps="false"
+                        android:textColor="#80ffffff"
+                        android:textStyle="bold"
+                        android:lineSpacingMultiplier="1.1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{movieDetail.overview}"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:paddingTop="2dp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

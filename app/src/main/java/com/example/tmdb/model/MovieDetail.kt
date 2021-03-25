@@ -26,4 +26,12 @@ data class MovieDetail(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+) {
+    val popularityString: String
+        get() = popularity.format(2)
+
+    val voteAverageString: String
+        get() = "★ " + vote_average.format(2) + " (\uD83D\uDC64$vote_count)"
+
+    fun Double.format(digits: Int) = "%.${digits}f".format(this)
+}

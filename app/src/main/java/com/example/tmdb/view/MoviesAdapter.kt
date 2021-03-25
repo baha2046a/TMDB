@@ -31,9 +31,9 @@ class MoviesAdapter(private val dataSet: MutableList<Movie>) :
             // Define click listener for the ViewHolder's View.
             textTitle = view.findViewById(R.id.textTitle)
             textDate = view.findViewById(R.id.textDate)
-            imgPoster = view.findViewById(R.id.imgPoster)
-            imgPoster.hierarchy.setPlaceholderImage(Common.emptyImage)
-            butLike = view.findViewById(R.id.butLike)
+            imgPoster = view.findViewById(R.id.img_poster)
+            imgPoster.hierarchy.setPlaceholderImage(Common.EMPTY_POSTER)
+            butLike = view.findViewById(R.id.but_like)
         }
     }
 
@@ -52,6 +52,7 @@ class MoviesAdapter(private val dataSet: MutableList<Movie>) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.textTitle.text = dataSet[position].title
+        viewHolder.textTitle.tag = dataSet[position].id
         viewHolder.textDate.text = dataSet[position].release_date
         val url: String = dataSet[position].poster_path?.toTmdbImg(400) ?: ""
         viewHolder.imgPoster.setImageURI(url)

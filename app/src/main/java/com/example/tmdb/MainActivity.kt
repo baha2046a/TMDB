@@ -1,18 +1,20 @@
 package com.example.tmdb
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.example.tmdb.control.FavoriteController
+import com.example.tmdb.control.MovieDetailController
 import com.example.tmdb.control.MovieSearchController
-import com.example.tmdb.view.MoviesAdapter
+import com.example.tmdb.view.ViewPagerAdapter
 import com.facebook.drawee.backends.pipeline.Fresco
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+
 
 class MainActivity : AppCompatActivity() {
+    lateinit var viewPager: ViewPager2
+    lateinit var detailFragment: DetailFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,55 +24,48 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        initRecyclerView()
+        viewPager = findViewById(R.id.viewpager2)
+        viewPager.adapter = ViewPagerAdapter(this).apply {
+            this.fragmentList.add(MainFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("object", 1)
+                }
+            })
+            this.fragmentList.add(DetailFragment().apply {
+                arguments = Bundle().apply {
+                    putInt("object", 2)
+                }.also { detailFragment = this }
+            })
+        }
+        viewPager.currentItem = 0
+
+        onLoadFavorite()
 
         MovieSearchController.query = "Hero"
 
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+    }
+
+    // Show Movie Detail
+    fun onClickMovieName(view: View) {
+        Log.d("GET Detail", view.tag.toString())
+
+        MovieDetailController.getDetail(view.tag as Int) {
+            viewPager.currentItem = 1
+            detailFragment.setItem(it)
         }
     }
 
-    private fun initRecyclerView() {
-        val layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-
-        val gridRecyclerView = findViewById<RecyclerView>(R.id.movieGridView).apply {
-            this.layoutManager = layoutManager
-            this.setHasFixedSize(false)
-        }
-
-        MoviesAdapter(MovieSearchController.resultSet).apply {
-            gridRecyclerView.adapter = this
-            MovieSearchController.onReset = this::notifyDataSetChanged
-            MovieSearchController.onNewData = this::notifyItemRangeInserted
-        }
-
-        gridRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (!MovieSearchController.complete && !MovieSearchController.loading &&
-                    layoutManager.findLastCompletelyVisibleItemPosition() == MovieSearchController.resultSet.size - 3
-                ) {
-                    MovieSearchController.loadNextPage()
-                }
-            }
-        })
+    override fun onPause() {
+        onSaveFavorite()
+        super.onPause()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+    override fun onStop() {
+        onSaveFavorite()
+        super.onStop()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+    private fun onLoadFavorite() = FavoriteController.load(this)
+
+    private fun onSaveFavorite() = FavoriteController.save(this)
 }

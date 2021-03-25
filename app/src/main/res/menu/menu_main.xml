@@ -2,8 +2,21 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.example.tmdb.MainActivity">
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-          app:showAsAction="never"/>
+    <item
+            android:id="@+id/action_search"
+            android:title="@string/action_search"
+            app:actionViewClass="android.widget.SearchView"
+            android:orderInCategory="100"
+            app:showAsAction="ifRoom"/>
+    <item
+            android:id="@+id/action_myFavorite"
+            android:title="@string/action_favorite"
+            android:orderInCategory="101"
+            app:showAsAction="ifRoom"
+            android:icon="@android:drawable/btn_star_big_on"/>
+    <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_settings"
+            android:orderInCategory="102"
+            app:showAsAction="never"/>
 </menu>

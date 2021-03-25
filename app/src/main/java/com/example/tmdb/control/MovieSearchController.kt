@@ -3,7 +3,6 @@ package com.example.tmdb.control
 import android.util.Log
 import com.example.tmdb.Common
 import com.example.tmdb.api.TmdbApiService
-import com.example.tmdb.api.actionSearchMovie
 import com.example.tmdb.model.Movie
 import com.example.tmdb.model.MovieSearchResult
 import java.util.*
@@ -12,10 +11,11 @@ import kotlin.collections.HashMap
 object MovieSearchController {
     /**
      * Setting query to a non empty value will start a search in TMDB
+     * Setting query to empty clear the current data
      */
     var query: String = ""
         set(value) {
-            if (field != value) {
+            if (field != value || value.isEmpty()) {
                 field = value
                 reset()
             }
@@ -26,8 +26,10 @@ object MovieSearchController {
      **/
     val resultSet: MutableList<Movie> = mutableListOf()
 
-    // Should be set to inform the Adapter there has a update
+    // Should be set to inform the Adapter there has a update (Adapter::notifyItemRangeInserted)
     var onNewData: (Int, Int) -> Unit = { _, _ -> }
+
+    // Should be set to inform the Adapter data is changed (Adapter::notifyDataSetChanged)
     var onReset: () -> Unit = { }
 
     var loading: Boolean = false
@@ -44,25 +46,30 @@ object MovieSearchController {
     private var totalPage: Int = 1
 
     init {
-        queryParam["api_key"] = Common.apiKey
+        queryParam["api_key"] = Common.API_KEY
         queryParam["language"] = TmdbApiService.getSuitableLanguageTag(Common.language)
     }
 
     /**
      * Load next page result if there has one
      **/
-    fun loadNextPage() {
+    fun loadNextPage(): Boolean {
         val nextPage = currentPage + 1
         if (!loading && valid && !complete && nextPage <= totalPage) {
             synchronized(this) {
                 if (!loading) {
                     loading = true
                     queryParam["page"] = nextPage.toString()
+
                     Log.d(this::class.simpleName, "GET search $query page $nextPage")
-                    actionSearchMovie(query, queryParam, MovieSearchController::setResult)
+
+                    TmdbApiService.actionSearchMovie(query, queryParam, MovieSearchController::setResult)
+
+                    return true
                 }
             }
         }
+        return false
     }
 
     /**
@@ -81,10 +88,10 @@ object MovieSearchController {
     /**
      * TMDB API return something, handle it
      **/
-    private fun setResult(resultQuery: String, resultData: Optional<MovieSearchResult>) {
-        Log.d(this::class.simpleName, "Receive Result for $resultQuery")
+    fun setResult(fromQuery: String, resultData: Optional<MovieSearchResult>) {
+        Log.d(this::class.simpleName, "Receive Result for $fromQuery")
         // If query changed before result come back, then this result should be ignore
-        if (resultQuery == query) {
+        if (fromQuery == query) {
             resultData.ifPresent {
                 currentPage = it.page
                 totalPage = it.total_pages
