@@ -60,7 +60,7 @@ object MovieSearchController {
                     loading = true
                     queryParam["page"] = nextPage.toString()
 
-                    Log.d(this::class.simpleName, "GET search : $query page $nextPage")
+                    Log.d(this::class.simpleName, "GET search : $query page $queryParam")
 
                     TmdbApiService.actionSearchMovie(query, queryParam, ::setResult)
 
@@ -81,7 +81,8 @@ object MovieSearchController {
         onReset.invoke()
         loading = false
         queryParam["query"] = query
-        queryParam["language"] = TmdbApiService.getSuitableLanguageTag(Common.language)
+        queryParam["include_adult"] = Common.ADULT_CONTENT.toString()
+        queryParam["language"] = Common.PREFER_LANG
         loadNextPage()
     }
 
@@ -109,7 +110,7 @@ object MovieSearchController {
                 }
 
                 val newItemCount = resultSet.size - oldSize
-                onNewData.invoke(oldSize, newItemCount)
+                if (oldSize == 0) onReset.invoke() else onNewData.invoke(oldSize, newItemCount)
 
                 Log.d(this::class.simpleName, "$newItemCount results Added")
             }

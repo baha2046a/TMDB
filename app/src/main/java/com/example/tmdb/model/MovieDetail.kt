@@ -2,6 +2,10 @@ package com.example.tmdb.model
 
 import com.example.tmdb.format
 
+/**
+ * Detail of Movie return by TMDB Movie Detail API
+ * Use: Bind to [com.example.tmdb.DetailFragment] to Display
+ */
 data class MovieDetail(
     val adult: Boolean,
     val backdrop_path: String?,
@@ -41,7 +45,7 @@ data class MovieDetail(
     val popularityAsString: String
         get() = popularity.format(2)
 
-    val voteAverageString: String
+    val voteAsString: String
         get() = "★ " + vote_average.format(2) + " (\uD83D\uDC64$vote_count)"
 
     override fun equals(other: Any?): Boolean {

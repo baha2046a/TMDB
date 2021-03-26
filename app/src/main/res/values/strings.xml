@@ -3,14 +3,17 @@
     <string name="action_settings">Settings</string>
     <string name="action_favorite">My Favorite</string>
     <string name="action_search">Search</string>
-    <string name="view_loading_next_page">Data is Loading"</string>
+    <string name="view_loading_next_page">Data is Loading</string>
+    <string name="error_no_network">No Network Connection</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="close_dialog_title">Close TMDB</string>
+    <string name="confirm_exit">Are you sure you want to exit?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="but_close">Close</string>
 </resources>

@@ -1,16 +1,17 @@
 package com.example.tmdb
 
 import android.os.Bundle
-import android.view.*
-import android.widget.SearchView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tmdb.control.FavoriteController
 import com.example.tmdb.control.MovieSearchController
 import com.example.tmdb.view.MoviesViewAdapter
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import java.util.*
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -26,48 +27,20 @@ class MainFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        setHasOptionsMenu(true)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        inflater.inflate(R.menu.menu_main, menu)
-
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean = onSearchMovie(query)
-            override fun onQueryTextChange(newText: String): Boolean = false
-        })
-
-        // Fix for a bug that the SearchView in OptionsMenu not full width
-        // https://stackoverflow.com/questions/18063103/searchview-in-optionsmenu-not-full-width
-        searchView.maxWidth = Integer.MAX_VALUE
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_myFavorite -> onShowMyFavorite()
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecyclerView(view)
+        if (!this::searchResultView.isInitialized) initRecyclerView(view)
     }
 
     private fun initRecyclerView(view: View) {
-        val layoutManager = GridLayoutManager(view.context, 2, GridLayoutManager.VERTICAL, false)
+        val layoutManager = FlexboxLayoutManager(view.context)
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.flexWrap = FlexWrap.WRAP
 
         searchResultView = view.findViewById<RecyclerView>(R.id.movie_grid_view).apply {
             this.layoutManager = layoutManager
-            this.setHasFixedSize(false)
+            this.setHasFixedSize(true)
         }
 
         MoviesViewAdapter(MovieSearchController.resultSet).apply {
@@ -80,9 +53,9 @@ class MainFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                // When scroll reach last 3 items, inform controller to load next page
+                // When scroll reach last few items, inform controller to load next page
                 if (!MovieSearchController.complete && !MovieSearchController.loading &&
-                    layoutManager.findLastCompletelyVisibleItemPosition() == MovieSearchController.resultSet.size - 3
+                    layoutManager.findLastCompletelyVisibleItemPosition() >= MovieSearchController.resultSet.size - 5
                 ) {
                     if (MovieSearchController.loadNextPage()) {
                         Snackbar.make(recyclerView, getString(R.string.view_loading_next_page), 1000).show()
@@ -90,23 +63,5 @@ class MainFragment : Fragment() {
                 }
             }
         })
-    }
-
-    private fun onSearchMovie(query: String): Boolean {
-        MovieSearchController.query = query
-        hideKeyboard()
-        activity?.setTitle(R.string.action_search)
-        return true
-    }
-
-    private fun onShowMyFavorite(): Boolean {
-        MovieSearchController.query = ""
-        MovieSearchController.setResult(
-            "",
-            Optional.of(FavoriteController.asMovieSearchResult())
-        )
-        hideKeyboard()
-        activity?.setTitle(R.string.action_favorite)
-        return true
     }
 }

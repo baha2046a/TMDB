@@ -36,11 +36,13 @@ class DetailFragment : Fragment() {
     }
 
     fun setItem(md: MovieDetail) {
-        if (this::binding.isInitialized) binding.movieDetail = md
+        if (this::binding.isInitialized) {
+            binding.movieDetail = md
 
-        val backdrop: String = md.backdrop_path?.toTmdbImg(400) ?: ""
-        backDropView.setImageURI(backdrop)
-        val poster: String = md.poster_path?.toTmdbImg(400) ?: ""
-        posterView.setImageURI(poster)
+            val backdrop: String = md.backdrop_path?.toTmdbImg(400) ?: ""
+            backDropView.setImageURI(backdrop)
+            val poster: String = md.poster_path?.toTmdbImg(400) ?: ""
+            posterView.setImageURI(poster)
+        }
     }
 }

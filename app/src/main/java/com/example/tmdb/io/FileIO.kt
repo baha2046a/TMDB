@@ -5,7 +5,10 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-object FilesIO {
+/**
+ * Save / Load string to file with [Gson] support
+ */
+object FileIO {
     fun <T> writeClassToFile(
         context: Context,
         content: T,
@@ -51,7 +54,7 @@ object FilesIO {
                 }
             }
         }.onSuccess {
-            Log.d("FileIO - Read $fileName", it)
+            Log.d("FileIO - Read $fileName", "Success")
         }.onFailure {
             Log.d("FileIO - Read $fileName", it.message.toString())
         }.getOrDefault("")

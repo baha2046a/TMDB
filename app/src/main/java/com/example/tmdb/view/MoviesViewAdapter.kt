@@ -14,26 +14,21 @@ import com.facebook.drawee.view.SimpleDraweeView
 import com.like.LikeButton
 import com.like.OnLikeListener
 
-
+/**
+ * Display data of [com.example.tmdb.model.Movie] to user via a [RecyclerView]
+ */
 class MoviesViewAdapter(private val dataSet: MutableList<Movie>) :
     RecyclerView.Adapter<MoviesViewAdapter.ViewHolder>() {
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textTitle: TextView
-        val textDate: TextView
-        val imgPoster: SimpleDraweeView
-        val butLike: LikeButton
+        val textTitle: TextView = view.findViewById(R.id.text_movie_title)
+        val textDate: TextView = view.findViewById(R.id.text_movie_date)
+        val imgPoster: SimpleDraweeView = view.findViewById(R.id.img_movie_poster)
+        val butLike: LikeButton = view.findViewById(R.id.but_movie_like)
 
         init {
-            // Define click listener for the ViewHolder's View.
-            textTitle = view.findViewById(R.id.text_movie_title)
-            textDate = view.findViewById(R.id.text_movie_date)
-            imgPoster = view.findViewById(R.id.img_movie_poster)
             imgPoster.hierarchy.setPlaceholderImage(Common.EMPTY_POSTER)
-            butLike = view.findViewById(R.id.but_movie_like)
+            imgPoster.hierarchy.setFailureImage(Common.EMPTY_POSTER)
         }
     }
 
@@ -70,5 +65,4 @@ class MoviesViewAdapter(private val dataSet: MutableList<Movie>) :
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
 }

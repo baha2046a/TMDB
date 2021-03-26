@@ -9,7 +9,7 @@
     <fragment
             android:id="@+id/SearchFragment"
             android:name="com.example.tmdb.MainFragment"
-            android:label="@string/first_fragment_label"
+            android:label=""
             tools:layout="@layout/fragment_main">
 
         <action
@@ -19,7 +19,7 @@
     <fragment
             android:id="@+id/DetailFragment"
             android:name="com.example.tmdb.DetailFragment"
-            android:label="@string/second_fragment_label"
+            android:label=""
             tools:layout="@layout/fragment_detail">
 
         <action

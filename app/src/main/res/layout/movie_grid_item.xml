@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:layout_width="190dp"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="180dp"
                                                    android:layout_height="370dp"
                                                    android:id="@+id/movie_grid_cell">
 
@@ -14,14 +15,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:cardBackgroundColor="#FFFFFF"
-            android:layout_margin="5dp"
+            android:layout_margin="3dp"
             app:cardElevation="5dp"
             app:cardCornerRadius="8dp"
             android:visibility="visible">
 
         <com.facebook.drawee.view.SimpleDraweeView
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
+                android:layout_height="261dp"
                 android:id="@+id/img_movie_poster"
                 android:visibility="visible"
                 android:scaleType="fitCenter"
@@ -46,7 +47,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="283dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            tools:text="Title"/>
 
     <TextView
             android:layout_width="0dp"
@@ -61,7 +63,8 @@
             android:layout_marginEnd="60dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="12dp"/>
+            android:layout_marginStart="12dp"
+            tools:text="Date"/>
 
     <com.like.LikeButton
             app:icon_type="heart"

@@ -1,5 +1,9 @@
 package com.example.tmdb.model
 
+/**
+ * Data of Movie return by TMDB Search Movie API
+ * Use: Bind to [com.example.tmdb.view.MoviesViewAdapter] to Display
+ */
 data class Movie(
     val adult: Boolean,
     val backdrop_path: String?,

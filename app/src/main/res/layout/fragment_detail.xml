@@ -73,7 +73,7 @@
                         app:layout_constraintStart_toStartOf="@+id/left_guide"/>
 
                 <TextView
-                        style="?android:textAppearanceSmall"
+                        style="?android:textAppearanceMedium"
                         android:id="@+id/text_detail_tagline"
                         android:textColor="#BBFFF9"
                         android:textStyle="bold"
@@ -119,7 +119,7 @@
                         tools:text="Date"/>
 
                 <TextView
-                        style="?android:textAppearanceSmall"
+                        style="?android:textAppearanceMedium"
                         android:id="@+id/text_detail_genres"
                         android:textColor="#BBFFF9"
                         android:textStyle="bold"
@@ -152,7 +152,7 @@
                         tools:text="Language"/>
 
                 <TextView
-                        style="?android:textAppearanceSmall"
+                        style="?android:textAppearanceMedium"
                         android:id="@+id/text_detail_vote_average"
                         android:textAllCaps="false"
                         android:textColor="#FBF28C"
@@ -160,7 +160,7 @@
                         android:lineSpacingMultiplier="1.2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{movieDetail.voteAverageString}"
+                        android:text="@{movieDetail.voteAsString}"
                         app:layout_constraintTop_toBottomOf="@+id/text_detail_spoken_languages"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="15dp"

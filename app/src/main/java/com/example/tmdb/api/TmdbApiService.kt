@@ -2,15 +2,18 @@ package com.example.tmdb.api
 
 import android.util.Log
 import com.example.tmdb.Common
+import com.example.tmdb.io.NetworkConnectionInterceptor
 import com.example.tmdb.model.MovieDetail
 import com.example.tmdb.model.MovieSearchResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
+
 
 object TmdbApiService {
     private val supportLanguage: Set<Locale> = setOf(Locale.US, Locale.JAPAN)
@@ -30,10 +33,10 @@ object TmdbApiService {
         }
     }
 
-    fun actionGetMovieDetail(movieId: Int, set: (MovieDetail) -> Unit) {
+    fun actionGetMovieDetail(movieId: Int, receiver: (MovieDetail) -> Unit) {
         val params: MutableMap<String, String> = HashMap()
         params["api_key"] = Common.API_KEY
-        params["language"] = getSuitableLanguageTag(Common.language)
+        params["language"] = Common.PREFER_LANG
 
         GlobalScope.launch {
             val response = api.movieDetail(movieId.toString(), params)
@@ -41,17 +44,10 @@ object TmdbApiService {
             if (response.isSuccessful) {
                 response.body()?.let {
                     withContext(Dispatchers.Main) {
-                        set.invoke(it)
+                        receiver.invoke(it)
                     }
                 }
             }
-        }
-    }
-
-    fun getSuitableLanguageTag(locale: Locale): String {
-        return when (supportLanguage.contains(locale)) {
-            true -> locale.toLanguageTag()
-            false -> supportLanguage.first().toLanguageTag()
         }
     }
 
@@ -64,9 +60,11 @@ object TmdbApiService {
     }
 
     private fun create(): TmdbApi {
-        val baseUrl = Common.BASE_URL
-        val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseUrl)
+        val httpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
+            .addInterceptor(NetworkConnectionInterceptor())
+        val retrofit: Retrofit = Retrofit.Builder().baseUrl(Common.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
+            .client(httpClientBuilder.build())
             .build()
         return retrofit.create(TmdbApi::class.java)
     }

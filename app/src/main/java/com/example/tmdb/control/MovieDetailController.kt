@@ -8,6 +8,7 @@ object MovieDetailController {
     private val detailCache: MutableMap<Int, MovieDetail> = hashMapOf()
 
     fun getDetail(movieId: Int, set: (MovieDetail) -> Unit) {
+        // Try to load from cache
         detailCache[movieId]?.let {
             set.invoke(it)
             return
@@ -15,9 +16,12 @@ object MovieDetailController {
 
         Log.d(this::class.simpleName, "GET detail : MovieId $movieId")
 
+        // Load from API
         TmdbApiService.actionGetMovieDetail(movieId) {
             detailCache[movieId] = it
             set.invoke(it)
         }
     }
+
+    fun clearCache() = detailCache.clear()
 }
