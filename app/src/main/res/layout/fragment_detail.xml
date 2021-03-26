@@ -100,14 +100,14 @@
 
                 <TextView
                         style="?android:textAppearanceSmall"
-                        android:id="@+id/text_detail_original_language"
+                        android:id="@+id/text_detail_spoken_languages"
                         android:textAllCaps="true"
                         android:textColor="#FADCDA"
                         android:textStyle="bold"
                         android:lineSpacingMultiplier="1.2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{movieDetail.original_language}"
+                        android:text="@{movieDetail.languageString}"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:paddingTop="2dp"

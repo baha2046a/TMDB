@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 }.also { detailFragment = this }
             })
         }
+        viewPager.currentItem = 1
         viewPager.currentItem = 0
 
         onLoadFavorite()

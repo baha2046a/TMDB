@@ -13,8 +13,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
 
 object TmdbApiService {
-    val supportLanguage: Set<Locale> = setOf(Locale.US, Locale.JAPAN)
-    val api = create()
+    private val supportLanguage: Set<Locale> = setOf(Locale.US, Locale.JAPAN)
+    private val api = create()
 
     fun actionSearchMovie(
         keyForValidCheck: String,

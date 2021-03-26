@@ -27,7 +27,6 @@ object Common {
     }.getOrDefault(Locale.US)
 
     init {
-        language = Locale.JAPAN
         Log.d("System Locale", language.toLanguageTag())
     }
 }

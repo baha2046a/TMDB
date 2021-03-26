@@ -27,11 +27,25 @@ data class MovieDetail(
     val vote_average: Double,
     val vote_count: Int
 ) {
+    val languageString: String
+        get() = spoken_languages.map { it.name }.reduceOrNull { r, t -> "$r $t" } ?: ""
+
     val popularityString: String
         get() = popularity.format(2)
 
     val voteAverageString: String
         get() = "★ " + vote_average.format(2) + " (\uD83D\uDC64$vote_count)"
 
-    fun Double.format(digits: Int) = "%.${digits}f".format(this)
+    private fun Double.format(digits: Int) = "%.${digits}f".format(this)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is MovieDetail) return false
+
+        return (id == other.id)
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
 }

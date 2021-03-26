@@ -10,8 +10,13 @@ import kotlin.collections.HashMap
 
 object MovieSearchController {
     /**
-     * Setting query to a non empty value will start a search in TMDB
-     * Setting query to empty clear the current data
+     * Full list of the result movie, start at page 1 and auto expand when call loadNextPage()
+     **/
+    val resultSet: MutableList<Movie> = mutableListOf()
+
+    /**
+     * Set query to a non empty value will start a search in TMDB
+     * Set query to empty will clear the current data
      */
     var query: String = ""
         set(value) {
@@ -20,11 +25,6 @@ object MovieSearchController {
                 reset()
             }
         }
-
-    /**
-     * Full list of the result movie, start at page 1 and auto expand when call loadNextPage()
-     **/
-    val resultSet: MutableList<Movie> = mutableListOf()
 
     // Should be set to inform the Adapter there has a update (Adapter::notifyItemRangeInserted)
     var onNewData: (Int, Int) -> Unit = { _, _ -> }
@@ -47,11 +47,10 @@ object MovieSearchController {
 
     init {
         queryParam["api_key"] = Common.API_KEY
-        queryParam["language"] = TmdbApiService.getSuitableLanguageTag(Common.language)
     }
 
     /**
-     * Load next page result if there has one
+     * Load next page if there has one
      **/
     fun loadNextPage(): Boolean {
         val nextPage = currentPage + 1
@@ -63,7 +62,7 @@ object MovieSearchController {
 
                     Log.d(this::class.simpleName, "GET search $query page $nextPage")
 
-                    TmdbApiService.actionSearchMovie(query, queryParam, MovieSearchController::setResult)
+                    TmdbApiService.actionSearchMovie(query, queryParam, ::setResult)
 
                     return true
                 }
@@ -73,7 +72,7 @@ object MovieSearchController {
     }
 
     /**
-     * query is changed
+     * query is changed, reset everything and start a new search
      **/
     private fun reset() {
         currentPage = 0
@@ -82,6 +81,7 @@ object MovieSearchController {
         onReset.invoke()
         loading = false
         queryParam["query"] = query
+        queryParam["language"] = TmdbApiService.getSuitableLanguageTag(Common.language)
         loadNextPage()
     }
 
@@ -89,7 +89,8 @@ object MovieSearchController {
      * TMDB API return something, handle it
      **/
     fun setResult(fromQuery: String, resultData: Optional<MovieSearchResult>) {
-        Log.d(this::class.simpleName, "Receive Result for $fromQuery")
+        Log.d(this::class.simpleName, "Result Received for $fromQuery")
+
         // If query changed before result come back, then this result should be ignore
         if (fromQuery == query) {
             resultData.ifPresent {
@@ -97,7 +98,7 @@ object MovieSearchController {
                 totalPage = it.total_pages
                 val oldSize = resultSet.size
 
-                // Result from the database may change between our call for different page
+                // Sequence in the database may change between our call for different page
                 // For example: DB: 1-12
                 //              Get Page 1 -> 1-10
                 //              Information in DB change: (new 1)+(1-12) = 1-13
@@ -109,6 +110,7 @@ object MovieSearchController {
 
                 val newItemCount = resultSet.size - oldSize
                 onNewData.invoke(oldSize, newItemCount)
+
                 Log.d(this::class.simpleName, "$newItemCount results Added")
             }
         }
