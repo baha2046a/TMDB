@@ -1,7 +1,6 @@
 package com.example.tmdb
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
@@ -48,9 +47,8 @@ class MainActivity : AppCompatActivity() {
 
     // Show Movie Detail
     fun onClickMovieName(view: View) {
-        Log.d("GET Detail", view.tag.toString())
-
         MovieDetailController.getDetail(view.tag as Int) {
+            hideKeyboard()
             viewPager.currentItem = 1
             detailFragment.setItem(it)
         }

@@ -3,10 +3,9 @@
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    android:layout_width="190dp"
                                                    android:layout_height="370dp"
-                                                   android:id="@+id/movie_cell">
+                                                   android:id="@+id/movie_grid_cell">
 
     <androidx.cardview.widget.CardView
-            android:id="@+id/card_view"
             android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -16,49 +15,63 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:cardBackgroundColor="#FFFFFF"
             android:layout_margin="5dp"
-            app:cardElevation="4dp"
-            app:cardCornerRadius="8dp">
+            app:cardElevation="5dp"
+            app:cardCornerRadius="8dp"
+            android:visibility="visible">
+
         <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="270dp"
-                android:id="@+id/img_poster"
+                android:id="@+id/img_movie_poster"
                 android:visibility="visible"
                 android:scaleType="fitCenter"
-                android:layout_marginTop="0dp"
-                android:layout_marginStart="0dp"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:text=""
-                android:ems="10"
-                android:id="@+id/textTitle"
-                android:onClick="onClickMovieName"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginTop="276dp"
-                android:textSize="18sp"
-                android:lineSpacingMultiplier="0.94"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimaryDark"
-                android:gravity="center_vertical"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:text=""
-                android:ems="10"
-                android:id="@+id/textDate"
-                android:textStyle="bold"
-                android:layout_marginStart="6dp"
-                android:layout_marginEnd="80dp"
-                android:layout_marginTop="332dp"/>
+                />
 
-        <com.like.LikeButton
-                app:icon_type="heart"
-                app:icon_size="8dp"
-                android:id="@+id/but_like"
-                android:layout_marginTop="327dp"
-                android:layout_marginStart="148dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
     </androidx.cardview.widget.CardView>
+
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:elevation="5dp"
+            android:ems="10"
+            android:id="@+id/text_movie_title"
+            android:onClick="onClickMovieName"
+            android:textSize="18sp"
+            android:lineSpacingMultiplier="0.94"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="283dp"
+            android:layout_marginEnd="10dp"/>
+
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:text=""
+            android:ems="10"
+            android:id="@+id/text_movie_date"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/text_movie_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"/>
+
+    <com.like.LikeButton
+            app:icon_type="heart"
+            app:icon_size="8dp"
+            android:elevation="5dp"
+            android:id="@+id/but_movie_like"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_movie_title"
+            android:layout_marginEnd="5dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

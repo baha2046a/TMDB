@@ -60,7 +60,7 @@ object MovieSearchController {
                     loading = true
                     queryParam["page"] = nextPage.toString()
 
-                    Log.d(this::class.simpleName, "GET search $query page $nextPage")
+                    Log.d(this::class.simpleName, "GET search : $query page $nextPage")
 
                     TmdbApiService.actionSearchMovie(query, queryParam, ::setResult)
 

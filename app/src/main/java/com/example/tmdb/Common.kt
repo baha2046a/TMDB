@@ -1,9 +1,14 @@
 package com.example.tmdb
 
+import android.app.Activity
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 import java.util.*
 
 object Common {
@@ -30,3 +35,20 @@ object Common {
         Log.d("System Locale", language.toLanguageTag())
     }
 }
+
+// Extensions
+
+fun Fragment.hideKeyboard() {
+    view?.let { activity?.hideKeyboard(it) }
+}
+
+fun Activity.hideKeyboard() {
+    hideKeyboard(currentFocus ?: View(this))
+}
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Double.format(digits: Int) = "%.${digits}f".format(this)

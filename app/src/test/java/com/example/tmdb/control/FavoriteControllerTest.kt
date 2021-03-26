@@ -1,6 +1,6 @@
-package com.example.tmdb
+package com.example.tmdb.control
 
-import com.example.tmdb.control.FavoriteController
+import com.example.tmdb.Fixture
 import org.junit.Assert
 import org.junit.Test
 

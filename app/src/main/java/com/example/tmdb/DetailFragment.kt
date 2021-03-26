@@ -15,9 +15,9 @@ import com.facebook.drawee.view.SimpleDraweeView
  */
 class DetailFragment : Fragment() {
 
-    lateinit var binding: FragmentDetailBinding
-    lateinit var posterView: SimpleDraweeView
-    lateinit var backDropView: SimpleDraweeView
+    private lateinit var binding: FragmentDetailBinding
+    private lateinit var posterView: SimpleDraweeView
+    private lateinit var backDropView: SimpleDraweeView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,17 +31,16 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        posterView = view.findViewById(R.id.detail_poster)
-        backDropView = view.findViewById(R.id.detail_backdrop)
+        posterView = view.findViewById(R.id.img_detail_poster)
+        backDropView = view.findViewById(R.id.img_detail_backdrop)
     }
 
     fun setItem(md: MovieDetail) {
-        binding.movieDetail = md
+        if (this::binding.isInitialized) binding.movieDetail = md
 
         val backdrop: String = md.backdrop_path?.toTmdbImg(400) ?: ""
         backDropView.setImageURI(backdrop)
         val poster: String = md.poster_path?.toTmdbImg(400) ?: ""
         posterView.setImageURI(poster)
-
     }
 }

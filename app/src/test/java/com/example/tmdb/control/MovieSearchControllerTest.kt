@@ -1,6 +1,6 @@
-package com.example.tmdb
+package com.example.tmdb.control
 
-import com.example.tmdb.control.MovieSearchController
+import com.example.tmdb.Fixture
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.util.*

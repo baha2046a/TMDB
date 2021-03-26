@@ -24,7 +24,7 @@ object FilesIO {
         }.onSuccess {
             Log.d("FileIO - Write $fileName", "Success")
         }.onFailure {
-            Log.d("FileIO - Write $fileName - Fail", it.message.toString())
+            Log.d("FileIO - Write $fileName", it.message.toString())
         }.getOrDefault(false)
     }
 
@@ -53,7 +53,7 @@ object FilesIO {
         }.onSuccess {
             Log.d("FileIO - Read $fileName", it)
         }.onFailure {
-            Log.d("FileIO - Read $fileName - Fail", it.message.toString())
+            Log.d("FileIO - Read $fileName", it.message.toString())
         }.getOrDefault("")
     }
 }

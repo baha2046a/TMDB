@@ -1,5 +1,7 @@
 package com.example.tmdb.model
 
+import com.example.tmdb.format
+
 data class MovieDetail(
     val adult: Boolean,
     val backdrop_path: String?,
@@ -18,7 +20,7 @@ data class MovieDetail(
     val production_countries: List<ProductionCountry>,
     val release_date: String,
     val revenue: Int,
-    val runtime: Int,
+    val runtime: Int?,
     val spoken_languages: List<SpokenLanguage>,
     val status: String,
     val tagline: String?,
@@ -27,16 +29,20 @@ data class MovieDetail(
     val vote_average: Double,
     val vote_count: Int
 ) {
-    val languageString: String
+    val genresAsString: String
+        get() = genres.map { it.name }.reduceOrNull { r, t -> "$r $t" } ?: ""
+
+    val companiesAsString: String
+        get() = production_companies.map { it.name }.reduceOrNull { r, t -> "$r\n$t" } ?: ""
+
+    val languagesAsString: String
         get() = spoken_languages.map { it.name }.reduceOrNull { r, t -> "$r $t" } ?: ""
 
-    val popularityString: String
+    val popularityAsString: String
         get() = popularity.format(2)
 
     val voteAverageString: String
         get() = "★ " + vote_average.format(2) + " (\uD83D\uDC64$vote_count)"
-
-    private fun Double.format(digits: Int) = "%.${digits}f".format(this)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

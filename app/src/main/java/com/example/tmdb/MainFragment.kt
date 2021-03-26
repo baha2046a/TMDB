@@ -1,17 +1,14 @@
 package com.example.tmdb
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tmdb.control.FavoriteController
 import com.example.tmdb.control.MovieSearchController
-import com.example.tmdb.view.MoviesAdapter
+import com.example.tmdb.view.MoviesViewAdapter
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -55,7 +52,6 @@ class MainFragment : Fragment() {
         return when (item.itemId) {
             R.id.action_myFavorite -> onShowMyFavorite()
             R.id.action_settings -> true
-            //R.id.action_detail_close -> onCloseMovieDetail()
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -74,7 +70,7 @@ class MainFragment : Fragment() {
             this.setHasFixedSize(false)
         }
 
-        MoviesAdapter(MovieSearchController.resultSet).apply {
+        MoviesViewAdapter(MovieSearchController.resultSet).apply {
             searchResultView.adapter = this
             MovieSearchController.onReset = this::notifyDataSetChanged
             MovieSearchController.onNewData = this::notifyItemRangeInserted
@@ -112,14 +108,5 @@ class MainFragment : Fragment() {
         hideKeyboard()
         activity?.setTitle(R.string.action_favorite)
         return true
-    }
-
-    private fun Fragment.hideKeyboard() {
-        view?.let { activity?.hideKeyboard(it) }
-    }
-
-    private fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

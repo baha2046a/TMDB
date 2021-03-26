@@ -15,8 +15,8 @@ import com.like.LikeButton
 import com.like.OnLikeListener
 
 
-class MoviesAdapter(private val dataSet: MutableList<Movie>) :
-    RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesViewAdapter(private val dataSet: MutableList<Movie>) :
+    RecyclerView.Adapter<MoviesViewAdapter.ViewHolder>() {
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
@@ -29,11 +29,11 @@ class MoviesAdapter(private val dataSet: MutableList<Movie>) :
 
         init {
             // Define click listener for the ViewHolder's View.
-            textTitle = view.findViewById(R.id.textTitle)
-            textDate = view.findViewById(R.id.textDate)
-            imgPoster = view.findViewById(R.id.img_poster)
+            textTitle = view.findViewById(R.id.text_movie_title)
+            textDate = view.findViewById(R.id.text_movie_date)
+            imgPoster = view.findViewById(R.id.img_movie_poster)
             imgPoster.hierarchy.setPlaceholderImage(Common.EMPTY_POSTER)
-            butLike = view.findViewById(R.id.but_like)
+            butLike = view.findViewById(R.id.but_movie_like)
         }
     }
 
