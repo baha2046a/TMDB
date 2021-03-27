@@ -10,13 +10,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.*
 
 
 object TmdbApiService {
-    private val supportLanguage: Set<Locale> = setOf(Locale.US, Locale.JAPAN)
     private val api = create()
 
     fun actionSearchMovie(
@@ -67,6 +67,11 @@ object TmdbApiService {
             .client(httpClientBuilder.build())
             .build()
         return retrofit.create(TmdbApi::class.java)
+    }
+
+    // For API Benchmark Test Only
+    suspend fun searchBenchmark(param: Map<String, String>): Response<MovieSearchResult> {
+        return api.searchMovie(param)
     }
 }
 

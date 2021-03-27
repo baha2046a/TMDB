@@ -52,4 +52,8 @@ object NetworkTracker {
             Log.e("CheckNetwork", "[Error] unRegisterNetworkCallback : ${it.message}")
         }
     }
+
+    fun testmode() {
+        availableNetworkCount = 1
+    }
 }

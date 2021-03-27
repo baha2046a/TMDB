@@ -16,7 +16,7 @@ object FavoriteController {
 
     fun isExist(movie: Movie): Boolean = favoriteList.contains(movie)
 
-    fun asMovieSearchResult() = MovieSearchResult(1, favoriteList.toList(), 1, favoriteList.size)
+    fun asMovieSearchResult(): MovieSearchResult = MovieSearchResult(1, favoriteList.toList(), 1, favoriteList.size)
 
     fun save(context: Context) {
         Log.i(this::class.simpleName, "[Status] Save Favorite Data File")

@@ -1,7 +1,10 @@
 package com.example.tmdb
 
 import android.app.AlertDialog
+import android.content.res.Configuration
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,8 +22,13 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
+
 class MainActivity : AppCompatActivity() {
     lateinit var viewPager: ViewPager2
+
+    var starOn: Drawable? = null
+    var starOff: Drawable? = null
+    var favoriteButton: MenuItem? = null
 
     var detailFragment: DetailFragment? = null
         get() {
@@ -39,17 +47,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        // Handle Network Error
+        starOn = getDrawable(android.R.drawable.btn_star_big_on)
+        starOff = getDrawable(android.R.drawable.btn_star_big_off)
+
+        // Show a message on Network Error
         NetworkConnectionInterceptor.onNoNetworkConnection = {
             Snackbar.make(findViewById(R.id.viewpager2), getString(R.string.error_no_network), 2000).show()
         }
 
+        // Init viewPager2
         if (!this::viewPager.isInitialized) {
             viewPager = findViewById(R.id.viewpager2)
             viewPager.offscreenPageLimit = Common.UI_ORDER.size
             viewPager.adapter = ViewPagerAdapter(this)
             viewPager.currentItem = DetailFragment::class.uiOrder() // Preload Detail Fragment
             viewPager.currentItem = MainFragment::class.uiOrder() // Show Main Fragment
+            Log.d("Init", "Init viewPager2")
         }
 
         onLoadFavorite()
@@ -58,7 +71,14 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.getDefaultSharedPreferences(this).apply {
             Common.changeListener(this, "switch_adult")
             Common.changeListener(this, "search_result_lang")
+            Common.changeListener(this, "search_result_max")
+            Log.d("Init", "Apply User Preference")
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewPager.currentItem = 0
     }
 
     override fun onBackPressed() {
@@ -72,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton(R.string.no, null)
                 .show()
         } else {
-            // Select the previous step.
+            // Select the main fragment.
             viewPager.currentItem = MainFragment::class.uiOrder()
         }
     }
@@ -81,6 +101,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreateOptionsMenu(menu)
 
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        favoriteButton = menu?.findItem(R.id.action_myFavorite)
 
         val searchView = menu?.findItem(R.id.action_search)?.actionView as SearchView?
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -98,28 +120,22 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_myFavorite -> onShowMyFavorite()
-            R.id.action_settings -> {
-                findViewById<ViewPager2>(R.id.viewpager2)?.currentItem = SettingsFragment::class.uiOrder()
-                true
-            }
+            R.id.action_settings -> onShowSetting()
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        NetworkTracker.register(this)
-        if (MovieSearchController.query.isEmpty()) onShowMyFavorite()
     }
 
     // Show Movie Detail
     fun onClickMovieName(view: View) {
         // MovieID is view.tag
-        MovieDetailController.getDetail(view.tag as Int) {
-            hideKeyboard()
-            viewPager.currentItem = DetailFragment::class.uiOrder()
-            detailFragment?.setItem(it)
-        }
+        onShowMovieDetail(view.tag as Int)
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        NetworkTracker.register(this)
+        if (MovieSearchController.query.isEmpty()) onShowMyFavorite()
     }
 
     override fun onPause() {
@@ -153,7 +169,19 @@ class MainActivity : AppCompatActivity() {
         hideKeyboard()
         viewPager.currentItem = MainFragment::class.uiOrder()
         setTitle(R.string.app_name)
+        starOff.let {
+            favoriteButton?.setIcon(it)
+        }
         return true
+    }
+
+
+    private fun onShowMovieDetail(movieId: Int) {
+        MovieDetailController.getDetail(movieId) {
+            hideKeyboard()
+            viewPager.currentItem = DetailFragment::class.uiOrder()
+            detailFragment?.setItem(it)
+        }
     }
 
     private fun onShowMyFavorite(): Boolean {
@@ -165,6 +193,14 @@ class MainActivity : AppCompatActivity() {
         viewPager.currentItem = MainFragment::class.uiOrder()
         hideKeyboard()
         setTitle(R.string.action_favorite)
+        starOn.let {
+            favoriteButton?.setIcon(it)
+        }
+        return true
+    }
+
+    private fun onShowSetting(): Boolean {
+        viewPager.currentItem = SettingsFragment::class.uiOrder()
         return true
     }
 }

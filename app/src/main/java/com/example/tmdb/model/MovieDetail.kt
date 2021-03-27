@@ -46,7 +46,7 @@ data class MovieDetail(
         get() = popularity.format(2)
 
     val voteAsString: String
-        get() = "★ " + vote_average.format(2) + " (\uD83D\uDC64$vote_count)"
+        get() = "★ " + vote_average.format(1) + " (\uD83D\uDC64$vote_count)"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

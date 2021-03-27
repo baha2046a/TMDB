@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
 
                 // When scroll reach last few items, inform controller to load next page
                 if (!MovieSearchController.complete && !MovieSearchController.loading &&
-                    layoutManager.findLastCompletelyVisibleItemPosition() >= MovieSearchController.resultSet.size - 5
+                    layoutManager.findLastVisibleItemPosition() >= MovieSearchController.resultSet.size - 4
                 ) {
                     if (MovieSearchController.loadNextPage()) {
                         Snackbar.make(recyclerView, getString(R.string.view_loading_next_page), 1000).show()

@@ -23,6 +23,7 @@ class MoviesViewAdapter(private val dataSet: MutableList<Movie>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textTitle: TextView = view.findViewById(R.id.text_movie_title)
         val textDate: TextView = view.findViewById(R.id.text_movie_date)
+        val textVote: TextView = view.findViewById(R.id.text_movie_vote)
         val imgPoster: SimpleDraweeView = view.findViewById(R.id.img_movie_poster)
         val butLike: LikeButton = view.findViewById(R.id.but_movie_like)
 
@@ -49,6 +50,7 @@ class MoviesViewAdapter(private val dataSet: MutableList<Movie>) :
         viewHolder.textTitle.text = dataSet[position].title
         viewHolder.textTitle.tag = dataSet[position].id
         viewHolder.textDate.text = dataSet[position].release_date
+        viewHolder.textVote.text = dataSet[position].voteAsString
         val url: String = dataSet[position].poster_path?.toTmdbImg(400) ?: ""
         viewHolder.imgPoster.setImageURI(url)
         viewHolder.butLike.isLiked = FavoriteController.isExist(dataSet[position])

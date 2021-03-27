@@ -15,6 +15,14 @@
                 app:dialogTitle="Select Prefer Language"
                 app:defaultValue="en-US"/>
 
+        <ListPreference
+                app:key="search_result_max"
+                app:title="Maximum Results to Show"
+                app:entries="@array/max_result_labels"
+                app:entryValues="@array/max_result_values"
+                app:dialogTitle="Select Results to Show"
+                app:defaultValue="200"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="About">

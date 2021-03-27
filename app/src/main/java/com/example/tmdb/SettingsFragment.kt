@@ -8,6 +8,9 @@ import androidx.preference.PreferenceFragmentCompat
 
 class SettingsFragment : PreferenceFragmentCompat() {
     var sharedPreferences: SharedPreferences? = null
+    var listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+        Common.changeListener(sharedPreferences, key ?: "")
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preferences, rootKey)
@@ -19,7 +22,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         Log.d("Preferences", "onResume")
         context?.also {
             sharedPreferences = it.getSharedPreferences(it.packageName + "_preferences", Context.MODE_PRIVATE).apply {
-                registerOnSharedPreferenceChangeListener(Common::changeListener)
+                registerOnSharedPreferenceChangeListener(listener)
             }
         }
     }
@@ -28,7 +31,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onPause()
         Log.d("Preferences", "onPause")
         context?.also {
-            sharedPreferences?.unregisterOnSharedPreferenceChangeListener(Common::changeListener)
+            sharedPreferences?.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }
 }

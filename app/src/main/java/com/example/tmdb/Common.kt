@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.example.tmdb.control.MovieDetailController
+import com.example.tmdb.control.MovieSearchController
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -40,15 +41,16 @@ object Common {
 
     const val FAVORITE_DATA_FILE = "favoriteMovie"
 
-    const val MAX_RESULT_TO_SHOW = 200
-
-    val EMPTY_POSTER = ColorDrawable(Color.DKGRAY)
+    val EMPTY_POSTER = ColorDrawable(Color.WHITE)
 
     // From User Setting
     var ADULT_CONTENT: Boolean = false
 
     // From User Setting
     var PREFER_LANG: String = "en-US"
+
+    // From User Setting
+    var MAX_RESULT_TO_SHOW = 200
 
     val SYS_LOCALE: Locale = kotlin.runCatching {
         Resources.getSystem().configuration.locales[0]
@@ -59,9 +61,14 @@ object Common {
         Log.d("Preferences", "Change $key")
         when (key) {
             "switch_adult" -> ADULT_CONTENT = sharedPreferences.getBoolean(key, false)
+            "search_result_max" -> MAX_RESULT_TO_SHOW = sharedPreferences.getString(key, "200")?.toInt() ?: 200
             "search_result_lang" -> {
-                PREFER_LANG = sharedPreferences.getString(key, "en-US") ?: "en-US"
-                MovieDetailController.clearCache()
+                val lang = sharedPreferences.getString(key, "en-US") ?: "en-US"
+                if (PREFER_LANG != lang) {
+                    PREFER_LANG = lang
+                    MovieSearchController.languageChanged()
+                    MovieDetailController.clearCache()
+                }
             }
         }
     }

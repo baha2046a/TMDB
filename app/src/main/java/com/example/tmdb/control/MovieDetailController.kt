@@ -7,10 +7,10 @@ import com.example.tmdb.model.MovieDetail
 object MovieDetailController {
     private val detailCache: MutableMap<Int, MovieDetail> = hashMapOf()
 
-    fun getDetail(movieId: Int, set: (MovieDetail) -> Unit) {
+    fun getDetail(movieId: Int, receiver: (MovieDetail) -> Unit) {
         // Try to load from cache
         detailCache[movieId]?.let {
-            set.invoke(it)
+            receiver.invoke(it)
             return
         }
 
@@ -19,7 +19,7 @@ object MovieDetailController {
         // Load from API
         TmdbApiService.actionGetMovieDetail(movieId) {
             detailCache[movieId] = it
-            set.invoke(it)
+            receiver.invoke(it)
         }
     }
 

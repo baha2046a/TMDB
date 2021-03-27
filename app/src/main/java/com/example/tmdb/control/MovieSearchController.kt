@@ -21,7 +21,11 @@ object MovieSearchController {
     var query: String = ""
         set(value) {
             if (field != value || value.isEmpty()) {
-                field = value
+                field = if (value.length > 100) {
+                    value.substring(0, 100)
+                } else {
+                    value
+                }
                 reset()
             }
         }
@@ -116,5 +120,9 @@ object MovieSearchController {
             }
         }
         loading = false
+    }
+
+    fun languageChanged() {
+        if (valid) reset()
     }
 }
