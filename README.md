@@ -1,6 +1,6 @@
 # Code challenge - Frontend
 
-[TMDB Design Spec](https://github.com/monstar-lab-technical-challenge/ml-mobile-test-ericchan/blob/main/TMDB%20Design%20Spec.pdf)
+[App Design Spec](https://github.com/monstar-lab-technical-challenge/ml-mobile-test-ericchan/blob/main/TMDB%20Design%20Spec.pdf)
 
 [Documentation (Class)](https://github.com/monstar-lab-technical-challenge/ml-mobile-test-ericchan/blob/main/Documentation-Class.pdf)
 
