@@ -11,7 +11,7 @@ import com.example.tmdb.model.MovieDetail
 import com.facebook.drawee.view.SimpleDraweeView
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * Fragment bind to MovieDetail
  */
 class DetailFragment : Fragment() {
 
