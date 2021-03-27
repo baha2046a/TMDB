@@ -16,5 +16,14 @@ Most control can done by swipe in one hand.
 
 Meet all requirements of Google Play Instant: Technical requirements checklist
 
+## User Guide
+
+Touch Search Icon on toolbar to make a search
+
+Touch result movie's title to view movie's detail
+
+Touch result "Heart" icon to add to favorite or remove it from favorite
+
+
 
 <img src="screenshot/Screenshot_1616877062.png" alt="" title="" width="270" height="555">  <img src="screenshot/Screenshot_1616870417.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877181.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877264.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877285.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616823667.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616823436.png" alt="" title="" width="555" height="270">
