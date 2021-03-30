@@ -30,7 +30,7 @@ Touch result movie's title to view movie's detail
 Touch result "Heart" icon to add to favorite or remove it from favorite
 
 
-<img src="screenshot/Screenshot_1616877062.png" alt="" title="" width="270" height="555">  <img src="screenshot/Screenshot_1616870417.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877181.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877264.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877285.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616823667.png" alt="" title="" width="270" height="555"> <img src="screenshot/v1.gif" alt="" title="" width="270" height="579"> <img src="screenshot/Screenshot_1616823436.png" alt="" title="" width="555" height="270">
+<img src="screenshot/Screenshot_1616877062.png" alt="" title="" width="270" height="555">  <img src="screenshot/Screenshot_1616870417.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877181.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877264.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877285.png" alt="" title="" width="270" height="555"> <img src="screenshot/v1.gif" alt="" title="" width="270" height="579"> <img src="screenshot/Screenshot_1616823436.png" alt="" title="" width="555" height="270">
 
 ## Details
 
@@ -47,3 +47,13 @@ This app can display easily display few hundred result as a flow.
 By the FlexboxLayoutManager, result can fit to different screen size and orientation.
 
 Most control can done by swipe in one hand.
+
+## 3rd Party Librarys
+
+Retrofit 2.9
+
+Fresco 2.4
+
+Like Button 0.2
+
+Gson 2.8.6
