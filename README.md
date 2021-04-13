@@ -7,6 +7,8 @@ Android Native App by 100% Kotline
 Demo the use of new android develop component :
 ViewPage2 and RecycleView for high performance display
 
+Support english, japanese and chinese in search
+
 Meet requirements of Google Play: Technical requirements checklist
 
 (Note: This is just a technical demo, 
