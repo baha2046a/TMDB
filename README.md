@@ -10,7 +10,7 @@ ViewPage2 and RecycleView for high performance display
 Meet requirements of Google Play: Technical requirements checklist
 
 (Note: This is just a technical demo, 
-most code commend and unit-test cases are missing due to time constraint)
+most commend for code and unit-test cases are missing due to time constraint)
 
 ## App Functions
 
