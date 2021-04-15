@@ -16,6 +16,8 @@ Save and load SharedPreferences
 
 Save and load data to local file via Gson
 
+Get data from REST api
+
 Support english, japanese and chinese in search
 
 Meet requirements of Google Play: Technical requirements checklist
