@@ -7,7 +7,12 @@ Android Native App by 100% Kotline
 Demo the use of new android develop component :
 ViewPage2 and RecycleView for high performance display
 
+Support english, japanese and chinese in search
+
 Meet requirements of Google Play: Technical requirements checklist
+
+(Note: This is just a technical demo, 
+most commend for code and some unit-test cases are missing due to time constraint)
 
 ## App Functions
 
@@ -31,6 +36,16 @@ Touch result "Heart" icon to add to favorite or remove it from favorite
 
 
 <img src="screenshot/Screenshot_1616877062.png" alt="" title="" width="270" height="555">  <img src="screenshot/Screenshot_1616870417.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877181.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877264.png" alt="" title="" width="270" height="555"> <img src="screenshot/Screenshot_1616877285.png" alt="" title="" width="270" height="555"> <img src="screenshot/v1.gif" alt="" title="" width="270" height="579"> <img src="screenshot/Screenshot_1616823436.png" alt="" title="" width="555" height="270">
+
+## API in use
+
+[The Movie Database API](https://developers.themoviedb.org/3)
+
+Search Movies   
+*GET /search/movie*
+
+Movies          
+*GET /movie/{movie_id}*
 
 ## Details
 
