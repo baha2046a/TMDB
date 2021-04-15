@@ -4,8 +4,17 @@
 
 Android Native App by 100% Kotline
 
-Demo the use of new android develop component :
+Demo:
+
 ViewPage2 and RecycleView for high performance display
+
+MainFragment - use of MVC
+
+DetailFragment - use of LiveData and Binding
+
+Save and load SharedPreferences
+
+Save and load data to local file via Gson
 
 Support english, japanese and chinese in search
 
@@ -13,6 +22,7 @@ Meet requirements of Google Play: Technical requirements checklist
 
 (Note: This is just a technical demo, 
 most commend for code and some unit-test cases are missing due to time constraint)
+
 
 ## App Functions
 
