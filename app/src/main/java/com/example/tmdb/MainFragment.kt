@@ -14,7 +14,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.snackbar.Snackbar
 
 /**
- * A simple [Fragment] subclass as the default destination in the navigation.
+ * [Fragment] to display search result / favorite in RecycleView
  */
 class MainFragment : Fragment() {
     lateinit var searchResultView: RecyclerView

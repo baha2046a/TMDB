@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.tmdb.api.toTmdbImg
 import com.example.tmdb.databinding.FragmentDetailBinding
 import com.example.tmdb.model.MovieDetail
+import com.example.tmdb.view.MovieDetailViewModel
 import com.facebook.drawee.view.SimpleDraweeView
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * Fragment bind to MovieDetail
  */
 class DetailFragment : Fragment() {
 
@@ -33,15 +35,19 @@ class DetailFragment : Fragment() {
 
         posterView = view.findViewById(R.id.img_detail_poster)
         backDropView = view.findViewById(R.id.img_detail_backdrop)
+
+        val viewModel: MovieDetailViewModel by activityViewModels()
+        viewModel.movieDetail.observe(viewLifecycleOwner) { setItem(it) }
     }
 
-    fun setItem(md: MovieDetail) {
+    // Update the UI
+    private fun setItem(data: MovieDetail) {
         if (this::binding.isInitialized) {
-            binding.movieDetail = md
+            binding.movieDetail = data
 
-            val backdrop: String = md.backdrop_path?.toTmdbImg(400) ?: ""
+            val backdrop: String = data.backdrop_path?.toTmdbImg(400) ?: ""
             backDropView.setImageURI(backdrop)
-            val poster: String = md.poster_path?.toTmdbImg(400) ?: ""
+            val poster: String = data.poster_path?.toTmdbImg(400) ?: ""
             posterView.setImageURI(poster)
         }
     }

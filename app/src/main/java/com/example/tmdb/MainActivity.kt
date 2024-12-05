@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.tmdb.control.FavoriteController
@@ -17,27 +18,20 @@ import com.example.tmdb.control.MovieDetailController
 import com.example.tmdb.control.MovieSearchController
 import com.example.tmdb.io.NetworkConnectionInterceptor
 import com.example.tmdb.io.NetworkTracker
+import com.example.tmdb.view.MovieDetailViewModel
 import com.example.tmdb.view.ViewPagerAdapter
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
-
 class MainActivity : AppCompatActivity() {
     lateinit var viewPager: ViewPager2
+
+    lateinit var movieDetailViewModel: MovieDetailViewModel
 
     var starOn: Drawable? = null
     var starOff: Drawable? = null
     var favoriteButton: MenuItem? = null
-
-    var detailFragment: DetailFragment? = null
-        get() {
-            if (field == null) {
-                field = supportFragmentManager
-                    .findFragmentByTag("f${DetailFragment::class.uiOrder()}") as DetailFragment?
-            }
-            return field
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +48,9 @@ class MainActivity : AppCompatActivity() {
         NetworkConnectionInterceptor.onNoNetworkConnection = {
             Snackbar.make(findViewById(R.id.viewpager2), getString(R.string.error_no_network), 2000).show()
         }
+
+        // ViewModel for movie detail
+        movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
 
         // Init viewPager2
         if (!this::viewPager.isInitialized) {
@@ -179,8 +176,8 @@ class MainActivity : AppCompatActivity() {
     private fun onShowMovieDetail(movieId: Int) {
         MovieDetailController.getDetail(movieId) {
             hideKeyboard()
+            movieDetailViewModel.set(it)
             viewPager.currentItem = DetailFragment::class.uiOrder()
-            detailFragment?.setItem(it)
         }
     }
 
